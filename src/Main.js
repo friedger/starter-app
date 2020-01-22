@@ -108,7 +108,7 @@ export default function Main({ person }) {
       </div>
       <div className="lead row mt-5">
         <div className="mx-auto col col-sm-10 col-md-8 px-4">
-          <NoteField title="Note" path="note" placeholder="to yourself..." />
+          <NoteField title="Club Card" path="note" placeholder="https://..." />
         </div>
 
         <div className="card col col-sm-10 col-md-8 mx-auto mt-5 text-center px-0 border-warning">
@@ -116,7 +116,9 @@ export default function Main({ person }) {
             <h5 className="card-title">Instructions</h5>
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Type any text in the field above.</li>
+            <li class="list-group-item">
+              Enter your <b>Blockstack Legends</b> club card above.
+            </li>
             <li class="list-group-item">
               Press the <i>Enter</i> key or click the <i>Save</i> button to
               store the note.
@@ -125,14 +127,6 @@ export default function Main({ person }) {
               Reload the page to confirm that the text is retained.
             </li>
           </ul>
-        </div>
-        <div className="alert alert-warning text-center col col-sm-10 col-md-8 mt-3 mx-auto px-5">
-          <h5>Next Step</h5>
-          <p>
-            Log out to get back to the Landing page where you can deploy your
-            own clone of&nbsp;this&nbsp;app as a starting point for your own
-            Blockstack apps.
-          </p>
         </div>
       </div>
     </main>
