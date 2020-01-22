@@ -1,11 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useFile } from 'react-blockstack';
+import { verifyProfileToken } from 'blockstack';
 
 const avatarFallbackImage =
   'https://s3.amazonaws.com/onename/avatar-placeholder.png';
 
 function Profile({ person }) {
-  const proxyUrl = (url) => "/proxy/" + url.replace(/^https?\:\/\//i, "")
+  const proxyUrl = url => '/proxy/' + url.replace(/^https?\:\/\//i, '');
   return (
     <div className="Profile">
       <div className="avatar-section text-center">
@@ -27,47 +28,73 @@ function Profile({ person }) {
   );
 }
 
+const clubPublicKey =
+  '023055040a2662b9cbd62ef7062afc12e7283a32a6ab4a2b1ab2e8c9e33ce43ccb';
+
 function NoteField({ title, path, placeholder }) {
   const [note, setNote] = useFile(path);
   const textfield = useRef();
   const spinner = useRef();
+  const [error, setError] = useState();
+  const [membership, setMembership] = useState();
   const saveAction = () => {
     spinner.current.classList.remove('d-none');
-    setNote(textfield.current.value);
+    const url = textfield.current.value;
+    setNote(url);
+    fetch(url)
+      .then(response => response.text())
+      .then(receiptContent => {
+        var receipt;
+        try {
+          receipt = verifyProfileToken(receiptContent, clubPublicKey);
+          setMembership(receipt);
+          spinner.current.classList.add('d-none');
+        } catch (e) {
+          setError(e);
+          spinner.current.classList.add('d-none');
+          return;
+        }
+      });
     setTimeout(() => spinner.current.classList.add('d-none'), 1500);
   };
   return (
-    <div className="NoteField input-group ">
-      <div className="input-group-prepend">
-        <span className="input-group-text">{title}</span>
+    <>
+      {error && <>{error.toString()}</>}
+      {membership && (
+        <>Hi, as a Blockstack Legend you can use all premium features!</>
+      )}
+      <div className="NoteField input-group ">
+        <div className="input-group-prepend">
+          <span className="input-group-text">{title}</span>
+        </div>
+        <input
+          type="text"
+          ref={textfield}
+          className="form-control"
+          disabled={note === undefined}
+          defaultValue={note || ''}
+          placeholder={placeholder}
+          onKeyUp={e => {
+            if (e.key === 'Enter') saveAction();
+          }}
+        />
+        <div className="input-group-append">
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            disabled={!setNote}
+            onClick={saveAction}
+          >
+            <div
+              ref={spinner}
+              role="status"
+              className="d-none spinner-border spinner-border-sm text-info align-text-top mr-2"
+            />
+            Save
+          </button>
+        </div>
       </div>
-      <input
-        type="text"
-        ref={textfield}
-        className="form-control"
-        disabled={note === undefined}
-        defaultValue={note || ''}
-        placeholder={placeholder}
-        onKeyUp={e => {
-          if (e.key === 'Enter') saveAction();
-        }}
-      />
-      <div className="input-group-append">
-        <button
-          className="btn btn-outline-secondary"
-          type="button"
-          disabled={!setNote}
-          onClick={saveAction}
-        >
-          <div
-            ref={spinner}
-            role="status"
-            className="d-none spinner-border spinner-border-sm text-info align-text-top mr-2"
-          />
-          Save
-        </button>
-      </div>
-    </div>
+    </>
   );
 }
 
