@@ -31,7 +31,7 @@ function Profile({ person }) {
 const clubPublicKey =
   '023055040a2662b9cbd62ef7062afc12e7283a32a6ab4a2b1ab2e8c9e33ce43ccb';
 
-function NoteField({ title, path, placeholder }) {
+function NoteField({ title, path, placeholder, username }) {
   const [note, setNote] = useFile(path);
   const textfield = useRef();
   const spinner = useRef();
@@ -47,7 +47,16 @@ function NoteField({ title, path, placeholder }) {
         var receipt;
         try {
           receipt = verifyProfileToken(receiptContent, clubPublicKey);
-          setMembership(receipt);
+          const member = receipt.payload.subject.username;
+          if (member === username) {
+            setMembership(receipt);
+          } else {
+            if (member) {
+              setError(`Member card is not for you but for ${member}`);
+            } else {
+              setError(`Not a Blockstack Legend membership card`);
+            }
+          }
           spinner.current.classList.add('d-none');
         } catch (e) {
           setError(e);
@@ -98,7 +107,7 @@ function NoteField({ title, path, placeholder }) {
   );
 }
 
-export default function Main({ person }) {
+export default function Main({ person, username }) {
   return (
     <main className="panel-welcome mt-5">
       <div className="row">
@@ -108,7 +117,12 @@ export default function Main({ person }) {
       </div>
       <div className="lead row mt-5">
         <div className="mx-auto col col-sm-10 col-md-8 px-4">
-          <NoteField title="Club Card" path="note" placeholder="https://..." />
+          <NoteField
+            title="Club Card"
+            path="note"
+            placeholder="https://..."
+            username={username}
+          />
         </div>
 
         <div className="card col col-sm-10 col-md-8 mx-auto mt-5 text-center px-0 border-warning">
