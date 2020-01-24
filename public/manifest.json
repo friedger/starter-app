@@ -1,11 +1,11 @@
 {
-  "name": "REBL One",
-  "description": "A starter app using React with Blockstack",
+  "name": "Demo App for Blockstack Legends",
+  "description": "Demo App for Blockstack Legends",
   "icons": [
     {
-    "src": "android-chrome-192x192.png",
-    "sizes": "192x192",
-    "type": "image/png"
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
     }
   ],
   "start_url": "./index.html",
