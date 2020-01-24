@@ -13,16 +13,15 @@ export default class Landing extends Component {
         <div className="jumbotron jumbotron-fluid pt-3 mb-0">
           <div className="container">
             <div className="panel-landing text-center mt-3">
-              <h1 className="landing-heading">REBL One</h1>
-              <p className="lead">
-                A Foundation for Making Apps using
-                React&nbsp;and&nbsp;Blockstack.
-              </p>
+              <h1 className="landing-heading">
+                Demo App for Blockstack Legends
+              </h1>
+              <p className="lead">Premium features for Blockstack Legends.</p>
 
               <p className="alert alert-info  border-info">
-                REBL One is an{' '}
+                Demo App for Blockstack Legends is an{' '}
                 <a
-                  href="https://github.com/REBL-Stack/starter-app"
+                  href="https://github.com/friedger/starter-app"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -32,7 +31,7 @@ export default class Landing extends Component {
                 the purpose of{' '}
                 <strong>
                   helping software developers like you quickly get going with
-                  Blockstack&nbsp;app&nbsp;development.
+                  paid subscriptions.
                 </strong>
               </p>
 
@@ -55,30 +54,23 @@ export default class Landing extends Component {
                     data&nbsp;ownership.
                   </div>
                   <div className="col col-md-6 p-4 text-left border-left">
-                    <a
-                      href="https://app.co/mining"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Blockstack awards more than $300K/month
-                    </a>{' '}
-                    to the best apps on the platform, increasing to a million
-                    dollars a month from May 2020. Use REBL One to make a web
-                    app and start earning your share already next&nbsp;month.
+                    Demo App for Blockstack Legends uses JWTs to proof
+                    memberships.
                   </div>
                 </div>
               </div>
 
               <div className="card mt-4 border-info">
                 <div className="card-header">
-                  <h5 className="card-title">Starter App Demo</h5>
+                  <h5 className="card-title">
+                    Demo App for Blockstack Legends
+                  </h5>
                 </div>
                 <div className="card-body">
                   <p className="card-text mb-3 mt-4 mx-5 px-5">
-                    Check out the minimalistic functionality of the starter app.
+                    Check out the minimalistic functionality of the demo app.
                     After signing in and authenticating with Blockstack, you can
-                    view your personal profile and save a note to Blockstack's
-                    online&nbsp;storage,&nbsp;Gaia.
+                    enter your membership card and enjoy "premium" features.
                   </p>
                 </div>
 
@@ -87,56 +79,7 @@ export default class Landing extends Component {
                 </p>
 
                 <div className="card-footer text-info">
-                  <strong>
-                    Build on this basic core to make amazing&nbsp;apps.
-                  </strong>
-                </div>
-              </div>
-
-              <div className="card mt-4  border-info">
-                <div className="card-header">
-                  <h5 classNme="card-title">Quick Deployment</h5>
-                </div>
-                <div className="card-body">
-                  <p className="card-text mx-5 my-3">
-                    Assuming you have accounts on{' '}
-                    <a
-                      href="https://github.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Github
-                    </a>
-                    &nbsp; and{' '}
-                    <a
-                      href="https://netlify.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Netlify
-                    </a>{' '}
-                    you can automatically{' '}
-                    <strong>
-                      generate and host for free a website that has
-                      your&nbsp;own&nbsp;clone&nbsp;of&nbsp;this&nbsp;starter&nbsp;app:
-                    </strong>
-                  </p>
-                  <a
-                    className="btn btn-secondary p-0"
-                    type="button"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://app.netlify.com/start/deploy?repository=https://github.com/REBL-Stack/starter-app"
-                  >
-                    <img
-                      src="/proxy/www.netlify.com/img/deploy/button.svg"
-                      alt="&nbsp;Deploy to Netlify&nbsp;"
-                    />
-                  </a>
-                </div>
-                <div className="card-footer">
-                  Use the deployed app as a staring point for your app project.
-                  We're looking forward to see what you're making.
+                  <strong>Decentralized paid subscriptions for all!</strong>
                 </div>
               </div>
             </div>
