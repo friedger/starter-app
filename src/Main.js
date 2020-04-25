@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
 import { useFile } from 'react-blockstack';
+import { UserGroup, GroupInvitation, Model } from 'radiks';
 
 const avatarFallbackImage =
   'https://s3.amazonaws.com/onename/avatar-placeholder.png';
 
 function Profile({ person }) {
-  const proxyUrl = (url) => "/proxy/" + url.replace(/^https?\:\/\//i, "")
+  const proxyUrl = url => '/proxy/' + url.replace(/^https?\:\/\//i, '');
   return (
     <div className="Profile">
       <div className="avatar-section text-center">
@@ -82,6 +83,46 @@ export default function Main({ person }) {
       <div className="lead row mt-5">
         <div className="mx-auto col col-sm-10 col-md-8 px-4">
           <NoteField title="Note" path="note" placeholder="to yourself..." />
+        </div>
+
+        <div>
+          <button
+            onClick={async () => {
+              const userGroup = new UserGroup({ name: 'Group1' });
+              await userGroup.create();
+              console.log('group created');
+              const invitation = await userGroup.makeGroupMembership(
+                'fmdroid.id'
+              );
+              console.log(invitation._id);
+            }}
+          >
+            Create and Invite fmdroid.id
+          </button>
+        </div>
+
+        <button
+          onClick={async () => {
+            const userGroup = await UserGroup.find(
+              'ffd0513f45a2-47df-9cda-be830856ea98'
+            );
+            console.log(userGroup);
+            await userGroup.destroy();
+            console.log('group deleted');
+          }}
+        >
+          Delete User Group
+        </button>
+        <div>
+          <button
+            onClick={async () => {
+              const myInvitationID = 'be9507952e4c-43cc-80d2-92a4863273dc';
+              const invitation = await GroupInvitation.findById(myInvitationID);
+              await invitation.activate();
+            }}
+          >
+            Accept invitation
+          </button>
         </div>
 
         <div className="card col col-sm-10 col-md-8 mx-auto mt-5 text-center px-0 border-warning">
