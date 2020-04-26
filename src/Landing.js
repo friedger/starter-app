@@ -1,25 +1,49 @@
 import React, { useCallback } from 'react';
 import { BlockstackButton } from 'react-blockstack-button';
 import { didConnect, useConnectOptions } from 'react-blockstack';
-import { showBlockstackConnect } from '@blockstack/connect'
+import { showBlockstackConnect } from '@blockstack/connect';
+import {
+  addressFromPublicKeys,
+  AddressVersion,
+  AddressHashMode,
+  createStacksPublicKey,
+  addressToString,
+} from '@blockstack/stacks-transactions';
+import { getPublicKeyFromPrivate } from 'blockstack';
 
 // Landing page demonstrating Blockstack connect for registration
 
 const connectOptions = {
   finished: ({ userSession }) => {
-      didConnect({ userSession })
+    didConnect({ userSession });
+    const userData = userSession.loadUserData();
+    const address = addressFromPublicKeys(
+      AddressVersion.TestnetSingleSig,
+      AddressHashMode.SerializeP2PKH,
+      1,
+      [createStacksPublicKey(getPublicKeyFromPrivate(userData.appPrivateKey))]
+    );
+    console.log(JSON.stringify({ address: addressToString(address) }));
+    userSession
+      .putFile(
+        'stx.json',
+        JSON.stringify({ address: addressToString(address) }),
+        { encrypt: false }
+      )
+      .then(r => console.log('STX address published'))
+      .catch(r => console.log(r));
   },
   appDetails: {
-    name: "REBL One",
-    icon: "https://one.rebl.run/rebl.png"
-  }
-}
+    name: 'REBL One',
+    icon: 'https://one.rebl.run/rebl.png',
+  },
+};
 
-export default function Landing (props) {
+export default function Landing(props) {
   const authOptions = useConnectOptions(connectOptions);
   const signIn = useCallback(() => {
-    showBlockstackConnect(authOptions)
-  },[authOptions])
+    showBlockstackConnect(authOptions);
+  }, [authOptions]);
   return (
     <div className="Landing">
       <div className="jumbotron jumbotron-fluid pt-3 mb-0">
@@ -27,8 +51,7 @@ export default function Landing (props) {
           <div className="panel-landing text-center mt-3">
             <h1 className="landing-heading">REBL One</h1>
             <p className="lead">
-              A Foundation for Making Apps using
-              React&nbsp;and&nbsp;Blockstack.
+              A Foundation for Making Apps using React&nbsp;and&nbsp;Blockstack.
             </p>
 
             <p className="alert alert-info  border-info">
@@ -40,8 +63,8 @@ export default function Landing (props) {
               >
                 open source
               </a>{' '}
-              project providing a minimalistic Blockstack starter app, with
-              the purpose of{' '}
+              project providing a minimalistic Blockstack starter app, with the
+              purpose of{' '}
               <strong>
                 helping software developers like you quickly get going with
                 Blockstack&nbsp;app&nbsp;development.
@@ -62,8 +85,8 @@ export default function Landing (props) {
                     Blockstack PBC
                   </a>{' '}
                   is a New York based public benefit corporation, creating a
-                  decentralized computing network and app ecosystem designed
-                  to protect digital rights including privacy and
+                  decentralized computing network and app ecosystem designed to
+                  protect digital rights including privacy and
                   data&nbsp;ownership.
                 </div>
               </div>
@@ -145,4 +168,3 @@ export default function Landing (props) {
     </div>
   );
 }
-
