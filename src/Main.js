@@ -12,12 +12,13 @@ const BigNum = require('bn.js');
 
 function NoteField({ title, path, placeholder }) {
   const { userSession } = useBlockstack();
-  const [note, setNote] = useFile(path);
+  const [nonce, setNonce] = useFile('nonce.txt');
   const textfield = useRef();
   const nonceField = useRef();
   const spinner = useRef();
   const saveAction = async () => {
     spinner.current.classList.remove('d-none');
+    setTimeout(() => spinner.current.classList.add('d-none'), 1500);
     const recipient = await userSession
       .getFile('stx.json', {
         decrypt: false,
@@ -25,31 +26,38 @@ function NoteField({ title, path, placeholder }) {
       })
       .then(r => JSON.parse(r))
       .catch(e => console.log(e));
-    console.log(recipient.address);
+    if (!recipient) {
+      return;
+    }
+    const nonceInt = parseInt(nonceField.current.value);
 
-    const transaction = makeSTXTokenTransfer(
-      'ST1T220B88WSF0ZYNS8V7B33DCZEY23FY7V83GDW',
-      new BigNum(1000),
-      new BigNum(1000),
-      '994d526b3b3409def4d3e481f9c4b3debaf9535cffed0769a7543601e1efa3c501',
-      {
-        nonce: new BigNum(0),
-        version: TransactionVersion.Testnet,
-        chainId: ChainID.Testnet,
-        postConditions: [
-          makeStandardSTXPostCondition(
-            'ST2P4S7Q4PHGQE9VGG6X8Z54MQQMN1E5047ZHVAF7',
-            FungibleConditionCode.Less,
-            new BigNum(2000)
-          ),
-        ],
-      }
-    );
-    console.log(transaction.serialize().toString('hex'));
-
-    setNote(textfield.current.value);
-    setTimeout(() => spinner.current.classList.add('d-none'), 1500);
+    console.log('STX address of recipient ' + recipient.address);
+    try {
+      const transaction = makeSTXTokenTransfer(
+        'ST1T220B88WSF0ZYNS8V7B33DCZEY23FY7V83GDW',
+        new BigNum(1000),
+        new BigNum(1000),
+        '994d526b3b3409def4d3e481f9c4b3debaf9535cffed0769a7543601e1efa3c501',
+        {
+          nonce: new BigNum(nonceInt),
+          version: TransactionVersion.Testnet,
+          chainId: ChainID.Testnet,
+          postConditions: [
+            makeStandardSTXPostCondition(
+              'ST2P4S7Q4PHGQE9VGG6X8Z54MQQMN1E5047ZHVAF7',
+              FungibleConditionCode.Less,
+              new BigNum(2000)
+            ),
+          ],
+        }
+      );
+      console.log(transaction.serialize().toString('hex'));
+      setNonce(String(nonce + 1));
+    } catch (e) {
+      console.log(e);
+    }
   };
+
   return (
     <div>
       Nonce:
@@ -59,6 +67,7 @@ function NoteField({ title, path, placeholder }) {
         className="form-control"
         defaultValue={'0'}
       />
+      Send Test STXs
       <div className="NoteField input-group ">
         <div className="input-group-prepend">
           <span className="input-group-text">{title}</span>
@@ -67,8 +76,7 @@ function NoteField({ title, path, placeholder }) {
           type="text"
           ref={textfield}
           className="form-control"
-          disabled={note === undefined}
-          defaultValue={note || ''}
+          defaultValue={nonce || ''}
           placeholder={placeholder}
           onKeyUp={e => {
             if (e.key === 'Enter') saveAction();
@@ -78,7 +86,6 @@ function NoteField({ title, path, placeholder }) {
           <button
             className="btn btn-outline-secondary"
             type="button"
-            disabled={!setNote}
             onClick={saveAction}
           >
             <div
@@ -86,7 +93,7 @@ function NoteField({ title, path, placeholder }) {
               role="status"
               className="d-none spinner-border spinner-border-sm text-info align-text-top mr-2"
             />
-            Save
+            Send
           </button>
         </div>
       </div>
@@ -105,9 +112,9 @@ export default function Main(props) {
       <div className="lead row mt-5">
         <div className="mx-auto col col-sm-10 col-md-8 px-4">
           <NoteField
-            title="Send 1000 STX to"
+            title="Send 1000 uSTX to"
             path="note"
-            placeholder="username"
+            placeholder="Username"
           />
         </div>
 
@@ -117,24 +124,22 @@ export default function Main(props) {
           </div>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">
-              Type any text in the field above.
+              Copy STX address and visit faucet to get 10k uSTX (testnet
+              tokens).
             </li>
             <li className="list-group-item">
-              Press the <i>Enter</i> key or click the <i>Save</i> button to
-              store the note.
+              Enter the blockstack id of a friend (that signed in to this app
+              already)
             </li>
             <li className="list-group-item">
-              Reload the page to confirm that the text is retained.
+              Press the <i>Enter</i> key or click the <i>Send</i> button to send
+              off the tokens.
+            </li>
+            <li className="list-group-item">
+              Check the balance again (after a few seconds) to see whether
+              tokens were send.
             </li>
           </ul>
-        </div>
-        <div className="alert alert-warning text-center col col-sm-10 col-md-8 mt-3 mx-auto px-5">
-          <h5>Next Step</h5>
-          <p>
-            Log out to get back to the Landing page where you can deploy your
-            own clone of&nbsp;this&nbsp;app as a starting point for your own
-            Blockstack apps.
-          </p>
         </div>
       </div>
     </main>

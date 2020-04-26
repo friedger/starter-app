@@ -34,8 +34,8 @@ const connectOptions = {
       .catch(r => console.log(r));
   },
   appDetails: {
-    name: 'REBL One',
-    icon: 'https://one.rebl.run/rebl.png',
+    name: 'Speed Spend',
+    icon: 'https://https://zen-kowalevski-913521.netlify.app/speedspend.png',
   },
 };
 
@@ -49,59 +49,59 @@ export default function Landing(props) {
       <div className="jumbotron jumbotron-fluid pt-3 mb-0">
         <div className="container">
           <div className="panel-landing text-center mt-3">
-            <h1 className="landing-heading">REBL One</h1>
-            <p className="lead">
-              A Foundation for Making Apps using React&nbsp;and&nbsp;Blockstack.
-            </p>
+            <h1 className="landing-heading">Speed Spend</h1>
+            <p className="lead">A simple app to test the Stacks Testnet</p>
 
             <p className="alert alert-info  border-info">
-              REBL One is an{' '}
+              Speed Spend is an{' '}
               <a
-                href="https://github.com/REBL-Stack/starter-app"
+                href="https://github.com/friedger/starter-app"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 open source
               </a>{' '}
-              project providing a minimalistic Blockstack starter app, with the
-              purpose of{' '}
+              web app with the purpose of{' '}
               <strong>
-                helping software developers like you quickly get going with
-                Blockstack&nbsp;app&nbsp;development.
+                helping everybody quickly test the Stacks Testnet.
               </strong>
             </p>
 
             <div className="card mt-4 border-info">
               <div className="card-header">
-                <h5 className="card-title">About Blockstack</h5>
+                <h5 className="card-title">About Stacks Testnet (Neon)</h5>
               </div>
               <div className="row">
                 <div className="col col-md-12 p-4">
                   <a
-                    href="https://blockstack.org/about"
+                    href="https://testnet.blockstack.org"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Blockstack PBC
+                    Stack Testnet
                   </a>{' '}
-                  is a New York based public benefit corporation, creating a
-                  decentralized computing network and app ecosystem designed to
-                  protect digital rights including privacy and
-                  data&nbsp;ownership.
+                  is blockchain based on Proof of Transfer. The testnet is
+                  initiated by Blockstack PBC, a New York based public benefit
+                  corporation. In the current phase <i>Neon</i> all nodes
+                  validate the network, only one node is mining new blocks and
+                  all nodes connect to the same bitcoin regtest node.
                 </div>
               </div>
             </div>
 
             <div className="card mt-4 border-info">
               <div className="card-header">
-                <h5 className="card-title">Starter App Demo</h5>
+                <h5 className="card-title">Speed Spend</h5>
               </div>
               <div className="card-body">
                 <p className="card-text mb-3 mt-4 mx-5 px-5">
-                  Check out the minimalistic functionality of the starter app.
-                  After signing in and authenticating with Blockstack, you can
-                  view your personal profile and save a note to Blockstack's
-                  online&nbsp;storage,&nbsp;Gaia.
+                  Distribute your money as quickly as possible.
+                  <br />A STX address is created automatically after login
+                  (using your app private key) and published using your Gaia
+                  storage. Get some tokens for this address from the faucet and
+                  send them as quickly as possible by entering a blockstack
+                  username of a friend (that as already published their STX
+                  address).
                 </p>
               </div>
 
@@ -110,56 +110,7 @@ export default function Landing(props) {
               </p>
 
               <div className="card-footer text-info">
-                <strong>
-                  Build on this basic core to make amazing&nbsp;apps.
-                </strong>
-              </div>
-            </div>
-
-            <div className="card mt-4  border-info">
-              <div className="card-header">
-                <h5 className="card-title">Quick Deployment</h5>
-              </div>
-              <div className="card-body">
-                <p className="card-text mx-5 my-3">
-                  Assuming you have accounts on{' '}
-                  <a
-                    href="https://github.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Github
-                  </a>
-                  &nbsp; and{' '}
-                  <a
-                    href="https://netlify.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Netlify
-                  </a>{' '}
-                  you can automatically{' '}
-                  <strong>
-                    generate and host for free a website that has
-                    your&nbsp;own&nbsp;clone&nbsp;of&nbsp;this&nbsp;starter&nbsp;app:
-                  </strong>
-                </p>
-                <button
-                  className="btn btn-secondary p-0"
-                  type="button"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://app.netlify.com/start/deploy?repository=https://github.com/REBL-Stack/starter-app"
-                >
-                  <img
-                    src="https://www.netlify.com/img/deploy/button.svg"
-                    alt="&nbsp;Deploy to Netlify&nbsp;"
-                  />
-                </button>
-              </div>
-              <div className="card-footer">
-                Use the deployed app as a staring point for your app project.
-                We're looking forward to see what you're making.
+                <strong>Help testing the Stacks Testnet.</strong>
               </div>
             </div>
           </div>

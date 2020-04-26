@@ -1,11 +1,11 @@
 {
-  "name": "REBL One",
-  "description": "A starter app using React with Blockstack",
+  "name": "Speed Spend",
+  "description": "Send tokens to as quickly as possible",
   "icons": [
     {
-    "src": "rebl.png",
-    "sizes": "192x192",
-    "type": "image/png"
+      "src": "speedspend.png",
+      "sizes": "192x192",
+      "type": "image/png"
     }
   ],
   "start_url": "./index.html",
